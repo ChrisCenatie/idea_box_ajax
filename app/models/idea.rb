@@ -1,3 +1,3 @@
 class Idea < ActiveRecord::Base
-  validates :quality, inclusion: { in: %w(genius plausible swill)}
+  enum quality: [ "swill" , "plausible" , "genuis" ]
 end
