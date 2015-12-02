@@ -28,7 +28,7 @@ $(document).ready(function(){
       type: 'POST',
       url: '/api/v1/ideas.json',
       data: postParams,
-      success: function(){ console.log('Fucking Testing!')}
+      success: function(){ console.log('Testing!')}
     })
   })
 })
