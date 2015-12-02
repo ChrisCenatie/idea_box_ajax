@@ -7,6 +7,7 @@ class Api::V1::IdeasController < ApplicationController
 
   def create
     Idea.create(idea_params) unless empty_idea?
+    respond_with status: 200
   end
 
   def destroy
