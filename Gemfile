@@ -15,6 +15,7 @@ gem 'responders'
 group :development, :test do
   gem 'capybara'
   gem 'pry'
+  gem 'rspec-rails'
 end
 
 group :development do
@@ -23,5 +24,8 @@ end
 
 group :test do
   gem 'database_cleaner'
-  gem 'minitest-rails'
+  gem 'launchy'
+  gem 'selenium-webdriver'
+  gem 'poltergeist'
+  gem 'phantomjs'
 end

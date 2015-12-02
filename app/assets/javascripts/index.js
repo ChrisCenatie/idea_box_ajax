@@ -3,26 +3,32 @@ $(document).ready(function(){
     type: 'GET',
     url:  '/api/v1/ideas.json',
     success: function(ideas){
-      $.each(ideas, function(index, idea){
-        $('#latest-ideas').append(
-          "<div class='idea"+ idea.id +"'><p>"
-          + idea.title
-          + idea.body
-          + idea.quality
-          + "</p></div>"
-        )
-      })
+      var ideaElements = $.map(ideas, function(idea, index){
+        var $ideaItem = $('<li></li>')
+        .attr( 'id', 'idea' + idea.id)
+        .append('<h3>'+idea.title+'</h3>')
+        .append('<p>'+idea.body+'</p>')
+        .append('<p>'+idea.quality+'</p>')
+        return $ideaItem;
+      });
+      $('#latest-ideas').html(ideaElements);
     }
   })
+
+  $('#create-idea').on('click', function(){
+    var newTitle = $('#title').val()
+    var newBody = $('#body').val()
+    var postParams = { idea: {
+      title: newTitle,
+      body:  newBody
+      }
+    }
+
+    $.ajax({
+      type: 'POST',
+      url: '/api/v1/ideas.json',
+      data: postParams,
+      success: function(){ console.log('Fucking Testing!')}
+    })
+  })
 })
-// <!-- <ul>
-//   <% @ideas.each do |idea| %>
-//     <li class="idea<%= idea.id %>">
-//       <%= idea.title %>
-//       <ul>
-//         <li class="body<%= idea.id %>"><strong>Body:</strong> <%= idea.body %></li>
-//         <li class="quality<%= idea.id %>"><strong>Quality:</strong> <%= idea.quality %></li>
-//       </ul>
-//     </li>
-//   <% end %>
-// </ul> -->
