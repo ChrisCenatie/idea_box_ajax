@@ -27,8 +27,7 @@ $(document).ready(function(){
     $.ajax({
       type: 'POST',
       url: '/api/v1/ideas.json',
-      data: postParams,
-      success: function(){ console.log('Testing!')}
+      data: postParams
     })
   })
 })
