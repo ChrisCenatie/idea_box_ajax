@@ -4,11 +4,13 @@ $(document).ready(function(){
     url:  '/api/v1/ideas.json',
     success: function(ideas){
       var ideaElements = $.map(ideas, function(idea, index){
-        var $ideaItem = $('<li></li>')
-        .attr( 'id', 'idea' + idea.id)
+        var $ideaItem = $('<div></div>')
+        .attr( 'class', 'idea')
+        .attr( 'data-id', idea.id)
         .append('<h3>'+idea.title+'</h3>')
         .append('<p>'+idea.body+'</p>')
         .append('<p>'+idea.quality+'</p>')
+        .append("</p><button id='delete-idea' class='btn btn-default btn-xs'>Delete</button>")
         return $ideaItem;
       });
       $('#latest-ideas').html(ideaElements);
@@ -30,4 +32,24 @@ $(document).ready(function(){
       data: postParams
     })
   })
+
+  deletePost();
 })
+
+function deletePost(){
+  $('#latest-ideas').delegate('#delete-idea', 'click', function(){
+    var $post = $(this).closest(".idea")
+    console.log($post.attr('data-id'));
+    $.ajax({
+      type: 'DELETE',
+      url:  '/api/v1/ideas/' + $post.attr('data-id') + '.json',
+      success: function(){
+        $post.remove()
+      },
+      error: function(){
+        $post.remove()
+        console.log('The post was already deleted.')
+      }
+    })
+  })
+}

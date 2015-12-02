@@ -9,6 +9,10 @@ class Api::V1::IdeasController < ApplicationController
     Idea.create(idea_params) unless empty_idea?
   end
 
+  def destroy
+    Idea.find(params[:id].to_i).delete
+  end
+
   private
     def idea_params
       params.require(:idea).permit(:title, :body)
