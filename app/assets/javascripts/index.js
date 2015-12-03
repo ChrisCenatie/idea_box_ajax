@@ -6,4 +6,5 @@ $(document).ready(function(){
   thumbsDown();
   openEdit();
   updateIdea();
+  filterIdeas();
 })
