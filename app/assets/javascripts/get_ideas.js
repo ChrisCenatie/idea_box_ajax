@@ -30,11 +30,13 @@ function editIdea(){
       url:  '/api/v1/ideas/' + $id + '.json',
       success: function(idea){
         $('.modal-content').attr('idea-id', $id)
+        .append("<h3 id='edit-id'>" + idea.id + "</h3>")
         .append("<h4>Title:</h4>")
         .append("<textarea id='edit-title' rows='1' cols='100'>" + idea.title + "</textarea>")
         .append("<h4>Body:</h4>")
         .append("<textarea id='edit-body' rows='3' cols='100'>" + idea.body + "</textarea><br>")
         .append("<button id='edit-idea' type='submit'>Update</button>")
+        .append("<button id='cancel-edit' type='submit'>Cancel</button>")
       }
     })
   })
@@ -42,29 +44,33 @@ function editIdea(){
 
 function updateIdea(){
   $(document).on('click', "#edit-idea", function(){
-    console.log("5555")
-
-
-
+    var id = $('#edit-id').text();
     var editTitle = $('#edit-title').val();
     var editBody = $('#edit-body').val();
-    // var postParams = { idea: {
-    //   title: newTitle,
-    //   body:  newBody
-    //   }
-    // }
-    console.log(editTitle);
+    var putParams = { idea: {
+      title: editTitle,
+      body:  editBody
+      }
+    }
 
-    // $.ajax({
-    //   type: 'POST',
-    //   url: '/api/v1/ideas.json',
-    //   data: postParams,
-    //   success: function(){
-    //     getIdeas();
-    //   },
-    //   error:  function(){
-    //     console.log("Idea failed to be added");
-    //   }
-    // })
+    $.ajax({
+      type: 'PUT',
+      url: '/api/v1/ideas/' + id + '.json',
+      data: putParams,
+      success: function(){
+        $('.modal-content').removeAttr('idea-id').empty();
+        getIdeas();
+      },
+      error:  function(){
+        console.log("Idea failed to be updated");
+      }
+    })
   })
+  cancelEdit();
 }
+
+function cancelEdit(){
+   $(document).on('click', "#cancel-edit", function(){
+     $('.modal-content').removeAttr('idea-id').empty();
+   })
+ }
