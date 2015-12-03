@@ -4,4 +4,6 @@ $(document).ready(function(){
   deletePost();
   thumbsUp();
   thumbsDown();
+  editIdea();
+  updateIdea();
 })

@@ -16,13 +16,17 @@ class Api::V1::IdeasController < ApplicationController
 
   def update
     if idea_params[:thumbs]
-      idea = Idea.find(params[:id].to_i)
-      quality = Idea.qualities[idea.quality] + idea_params[:thumbs].to_i
-      idea.update(quality: quality)
-      respond_with status: 200
+      quality = UpdateQuality.new(params[:id], idea_params[:thumbs])
+      respond_with status: quality.update
+    # elsif !empty_idea?
+    #
     end
   end
 
+  def show
+    respond_with Idea.find(params[:id])
+  end
+  
   private
     def idea_params
       params.require(:idea).permit(:title, :body, :thumbs)
