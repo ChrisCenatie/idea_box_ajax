@@ -75,6 +75,7 @@ function updateIdea(){
         getIdeas();
       },
       error:  function(){
+        $('.modal-content').removeAttr('idea-id').empty();
         console.log("Idea failed to be updated");
       }
     })
